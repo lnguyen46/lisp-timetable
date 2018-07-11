@@ -21,14 +21,23 @@ When you load the server for the first time, it automatically renders subjects f
 - Every class has one day having consecutive Math periods and one day having consecutive Literature periods.
 
 ## Usage
+0. Make sure you already setup Lisp development environment by following:
+
+https://lispcookbook.github.io/cl-cookbook/getting-started.html
+
 1. Clone this repo where Quicklisp can find it:
-`git@github.com:lnguyen46/lisp-timetable.git ~/common-lisp/`
+
+`git clone git@github.com:lnguyen46/lisp-timetable.git ~/common-lisp/`
 
 2. Jump to REPL and type:
-`ql:quickload :time-table`
 
-3. Still in REPL, start local server
+`(ql:quickload :time-table)`
+
+
 `(hunchentoot:start (make-instance 'hunchentoot:easy-acceptor :port 4242))`
+
+
+<img src="https://user-images.githubusercontent.com/22726858/42569013-55508252-8539-11e8-8f2a-7bfdb976a60a.png">
 
 4. Go to: http://127.0.0.1:4242/ to see the result.
 
