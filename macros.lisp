@@ -142,7 +142,7 @@
   (list :label
 	(list :input :type "radio" :checked "checked"
 	      :id "Eagle" :name "sub-opt"
-	      (list :i 
+	      (list :i
 		    :class "fa-fw-2x fa-lg fa fa-ra Eagle"
 		    :style "padding: 3px; color: brown")
 	      "&nbsp; Eagle view") :br :br))
@@ -213,17 +213,14 @@
     (otherwise (fa sub "fa fa-times-circle" "red"))))
 
 (defun fa (class icon color)
-  (list :i 
+  (list :i
 	:class (concatenate 'string "fa-fw-2x fa-lg " icon " " class)
 	:style (concatenate 'string "padding: 3px; color: " color)))
-
-
 
 (defun shuffle-until-valid (sub-list)
   (loop
      do (setf sub-list (alexandria:shuffle sub-list))
      when (validp sub-list) return sub-list))
-
 
 (defun validp (lst)
   "This lst will be valid if
@@ -250,7 +247,6 @@
 	    t
 	    nil))))
 
-
 (defun largetst-pos-freq (lst)
   (let ((uniq-lst (remove-duplicates lst))
 	(res nil))
@@ -258,14 +254,12 @@
       (push (count num lst) res))
     (car (sort res #'>))))
 
-
 (defun largest-subject-freq (day)
   "Return an integer that is the largest subject frequency on this day"
   (let ((res nil))
     (dolist (sub day)
       (push (count sub day :test #'equal) res))
     (car (sort res #'>))))
-
 
 (defun appear-once-p (sub-list day)
   "Return true if subject in sub-list appear once a day"
@@ -368,7 +362,7 @@
 	     (sub-ppos (nth sub-pos-in-matrix matrix))
 	     (sub-common-ppos (freq-ppos-gt2 (occur-alist sub-ppos)))
 	     (other-subs-ppos (remove sub-ppos matrix :test #'equal)))
-	(dolist (ppos sub-common-ppos) 
+	(dolist (ppos sub-common-ppos)
 	  (let* ((pp   (car ppos))
 		 (freq (cdr ppos))
 		 (rotate-times (- freq 2))
@@ -395,61 +389,6 @@
 				     (nth pos (nth (position miss-pos column) matrix)))
 			    (return))))))))))))
     matrix))
-
-
-
-
-;; Ideas visualization ;;
-;; =================== ;;
-(defmacro my-write-file (file-name class-lst &body body)
-  "A template we use to visualize school's period position data."
-  `(with-open-file (stream (concatenate 'string "./common-lisp/time-table/" ,file-name)
-			   :direction :output
-			   :if-exists :supersede
-			   :if-does-not-exist :create)
-     (write-line (concatenate 'string
-			     (format nil "~6a" "Sub")
-			     (format nil "|~{~3a~^|~}|" ,class-lst))
-		 stream)
-     (write-line (format nil "~{~2a~}" (make-list 52 :initial-element '=))
-		 stream)
-     ,@body))
-
-
-(defun write-ppos-to-file (sub-lst periods)
-  "Write period positions data of this subject list to file."
-  (my-write-file "test.txt" *class-list-2*
-    (loop for sub in sub-lst
-       do (write-line (concatenate 'string
-				   (format nil "~6a" sub)
-				   (format nil "(~{~3d|~})" (period-positions sub periods)))
-		      stream))))
-
-
-(defun write-matrix-to-file (sub-lst periods)
-  "Write rotated matrix of period positions of this subject list to file."
-  (my-write-file "matrix.txt" *class-list-2*
-    (let ((matrix (mrotate-ppos sub-lst periods)))
-      (loop for sub in sub-lst
-	 do (write-line (concatenate 'string
-				     (format nil "~6a" sub)
-				     (format nil "(~{~3d|~})" (nth (position sub sub-lst) matrix)))
-			stream)))))
-
-
-
-(defun sort-occ-alist (sub periods)
-  "Return a sorted assoc list of this subject's period positions frequency in the periods."
-  (let ((ppos-lst (period-positions sub periods)))
-    (sort (alexandria:hash-table-alist (occurences ppos-lst))
-	  #'> :key #'cdr)))
-
-(defun check-occ-matrix (sub)
-  "Return an assoc list of this subject's period position frequency in rotated matrix."
-  (let ((matrix (mrotate-ppos *1cl-subjects* *periods-lst*)))
-    (occur-alist (nth (position sub *1cl-subjects* :test #'equal) matrix))))
-
-
 
 ;; Unit Tests ;;
 ;; ========== ;;
