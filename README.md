@@ -7,9 +7,9 @@ It schedules subjects for 24 classes in my fictional Vietnamese secondary school
 This project is a throw-away prototype!
 
 ## Web libraries
-- Hunchentoot for web server
-- Parenscript for Javascript stuff
-- cl-who for rendering HTML pages
+- [Hunchentoot](http://weitz.de/hunchentoot/) for web server
+- [Parenscript](https://common-lisp.net/project/parenscript/) for Javascript stuff
+- [cl-who](http://weitz.de/cl-who/) for rendering HTML pages
 
 
 ## Features
